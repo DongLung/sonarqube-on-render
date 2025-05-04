@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: sonarqube
+    env: docker
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: SONARQUBE_JDBC_URL
+        fromDatabase:
+          name: sonarqube-postgres
+          property: connectionString
+      - key: SONARQUBE_JDBC_USERNAME
+        fromDatabase:
+          name: sonarqube-postgres
+          property: user
+      - key: SONARQUBE_JDBC_PASSWORD
+        fromDatabase:
+          name: sonarqube-postgres
+          property: password
+
+databases:
+  - name: sonarqube-postgres
+    plan: free
+    databaseName: sonarqube
+    user: sonar
